@@ -1,0 +1,20 @@
+# Build your Java project and check for compilation errors
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+# 1. Setup the Java Environment (using JDK 17 or 11)
+- task: JavaToolInstaller@0
+  displayName: 'Install Java JDK'
+  inputs:
+    versionSpec: '17'
+    jdkArchitectureOption: 'x64'
+    jdkSourceOption: 'PreInstalled'
+
+# 2. Compile your specific Java file 
+- script: |
+    javac GuessGame.java
+  displayName: 'Compile GuessGame.java'
