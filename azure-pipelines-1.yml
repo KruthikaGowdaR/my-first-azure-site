@@ -1,4 +1,4 @@
-# Build your Java project and check for compilation errors
+# Build your standalone Java file and check for compilation errors
 trigger:
 - main
 
@@ -6,15 +6,7 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
-# 1. Setup the Java Environment (using JDK 17 or 11)
-- task: JavaToolInstaller@0
-  displayName: 'Install Java JDK'
-  inputs:
-    versionSpec: '17'
-    jdkArchitectureOption: 'x64'
-    jdkSourceOption: 'PreInstalled'
-
-# 2. Compile your specific Java file 
+# 1. Compile your Java file directly using the Ubuntu built-in compiler
 - script: |
-    javac GuessGame.java
-  displayName: 'Compile GuessGame.java'
+    javac game.java
+  displayName: 'Compile game.java'
