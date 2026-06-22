@@ -1,0 +1,31 @@
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+stages:
+- stage: Build
+  displayName: Build Stage
+  jobs:
+  - job: PackageHTML
+    displayName: Package HTML Website
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+
+    # 1. Package your index.html file for deployment
+    - task: CopyFiles@2
+      displayName: 'Stage HTML Web Files'
+      inputs:
+        SourceFolder: '$(Build.SourcesDirectory)'
+        Contents: 'index.html'
+        TargetFolder: '$(Build.ArtifactStagingDirectory)'
+
+    # 2. Publish the HTML site artifact so Azure can deploy it live
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish Web Artifact'
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'website'
+        publishLocation: 'Container'
