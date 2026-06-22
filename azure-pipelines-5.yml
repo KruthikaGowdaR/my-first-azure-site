@@ -1,4 +1,3 @@
-# Build and verify your Java game file
 trigger:
 - main
 
@@ -6,7 +5,13 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
-# Compile the Java file directly using the built-in compiler
+# Compile GuessGame.java wherever it is located in the repository folders
 - script: |
-    javac GuessGame.java
-  displayName: 'Compile GuessGame.java'
+    FILE_PATH=$(find . -name "GuessGame.java" -print -quit)
+    if [ -z "$FILE_PATH" ]; then
+      echo "Could not find GuessGame.java anywhere in the repository!"
+      exit 1
+    fi
+    echo "Found file at: $FILE_PATH"
+    javac "$FILE_PATH"
+  displayName: 'Locate and Compile GuessGame.java'
