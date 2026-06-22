@@ -1,0 +1,12 @@
+# Build and verify your Java game file
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+# Compile the Java file directly using the built-in compiler
+- script: |
+    javac GuessGame.java
+  displayName: 'Compile GuessGame.java'
